@@ -1,0 +1,2 @@
+content accessBar content/
+overlay chrome://browser/content/browser.xul chrome://accessBar/content/accessBar.xul

@@ -1,0 +1,74 @@
+<?xml version="1.0"?> 
+<overlay id="Scrapper-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+ <script type="application/x-javascript" src="chrome://googbar/content/googbar.js" />
+<script src = "chrome://accessBar/content/funct.js" />
+
+ <script>
+
+ 
+
+
+
+ <![CDATA[
+
+
+
+ 
+function popup(url) 
+{
+
+ var width  = 300;
+ var height = 200;
+ 
+ 
+
+ 
+ if ( !isLogin )
+     {
+ var left   = (screen.width  - width)/2;
+ var top    = (screen.height - height)/2;
+ var params = 'width='+width+', height='+height;
+ params += ', top='+top+', left='+left;
+ params += ', directories=no';
+ params += ', location=no';
+ params += ', menubar=no';
+ params += ', resizable=no';
+ params += ', scrollbars=no';
+ params += ', status=no';
+ params += ', toolbar=no';
+ window.open(url,"LOGON", params);
+ }
+ else
+   {
+   
+       document.getElementById("searchTextbox" ).disabled = true;
+	   document.getElementById("searchButton" ).disabled = true;
+	   
+	   //close connection
+	   
+	   
+	   isLogin = false;
+   
+   
+   }
+  
+ 
+ 
+ 
+}
+
+]]>
+
+</script>
+
+<toolbox id="navigator-toolbox">
+   <toolbar id="accessToolBar" toolbarname="Access Bar" >
+      
+       
+       <textbox id="searchTextbox"  disabled = "true" />  
+       <button id="searchButton" image ="chrome://accessBar/content/images/readMail.JPG" disabled = "true" />      
+      <button id="startButton" oncommand="popup('chrome://accessBar/content/login.xul');" image="chrome://accessBar/content/images/mc.jpg"/>
+    
+   </toolbar>
+</toolbox>
+</overlay>

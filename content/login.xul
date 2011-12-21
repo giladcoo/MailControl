@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+
+
+<window 
+  style="background-color:grey;"
+  id="loginWindow"
+  width = "100"
+  height = "100"
+  title="Login"
+  orient="vertical"
+  onload = "initialize();"
+  
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  
+  
+ <script src = "chrome://accessBar/content/funct.js" />
+
+
+
+<hbox style="background-color:grey">
+<vbox>
+<description id = "msgDescription" >
+Waiting for login.
+</description>
+<label value=" "/>
+<label value=" "/>
+
+<label value="User Name:  "/>
+<label value=" "/>
+<label value="Passsword:  "/>
+</vbox>
+<vbox>
+<label value=" "/>
+<label value=" "/>
+<label value=" "/>
+
+<textbox id="userNameTextbox"/>
+<textbox id="passwordTextbox" type="password"/>
+<label value=" "/>
+<label value=" "/>
+</vbox>
+</hbox>
+
+<hbox>
+  <label value="                   "/>
+
+  <button id = "okButton" label = "Ok" />
+  <button id = "cancelButton" label = "Cancel" />
+</hbox>
+
+
+
+</window>
