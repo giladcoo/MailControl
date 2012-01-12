@@ -1,79 +1,63 @@
 
-var isLogin = false;
 
 
+//declare event handlers for login screen buttons
 function initialize()
 {
+   
 
    document.getElementById( "okButton" ).addEventListener( "command",doOk, true );
    document.getElementById( "cancelButton" ).addEventListener( "command",doCancel, true );
-    isLogin = false;
-
-
-
-
+ 
 }
 
+//in case we press "ok" in  login screen, this function checks user
  function doOk()
 {
 
-   var userName;
-   var password;
 
    var response;
 
-  
-       userName = document.getElementById( "userNameTextbox" ).value;
-       password = document.getElementById( "passwordTextbox" ).value;
+       
+      var userName = document.getElementById( "userNameTextbox" ).value;
+       var userPassword = document.getElementById( "passwordTextbox" ).value;
 	   
 	   
 	   
 	 if ( !( validateInput( userName, password )  ) )
-	     {
 		     alert( "!Invalid Input" );
-			 
-		 
-		 }
- 
-       
+			  
      else
 {	 
            
-            var url = "https://www.google.com/accounts/ClientLogin";
+      var url = "https://www.google.com/accounts/ClientLogin";
       var request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Components.interfaces.nsIXMLHttpRequest);
    
 
-   request.onload = function(aEvent)          //success
+   request.onload = function(aEvent)          //in case object was created successfully
 	  {
-	     response = aEvent.target.responseText;
+	     response = aEvent.target.responseText;                   //recieve response from mail server
          
 		 
-		 if ( response[0 ] == 'S' && response[1] == 'I' && response[2] == 'D' )
+		 if ( response[0 ] == 'S' && response[1] == 'I' && response[2] == 'D' )         //check if user exists
 		 {
 		     
 			 self.opener.document.getElementById( "searchTextbox" ).disabled = false;
 			 self.opener.document.getElementById( "searchButton" ).disabled = false;
-			 isLogin = true;
-			 
-			
-			 
 		     self.close();
-			
          }			
-       else
-     {
- 
- document.getElementById( "msgDescription" ).style.backgroundColor = "red";
-       document.getElementById( "msgDescription" ).style.color = "white";
-       document.getElementById( "msgDescription" ).childNodes[ 0 ].nodeValue = "Not authenticated.";
-      
-      
-
-     }
+    
+	    else
+     
+	     {
+    	 document.getElementById( "msgDescription" ).style.backgroundColor = "red";
+         document.getElementById( "msgDescription" ).style.color = "white";
+         document.getElementById( "msgDescription" ).childNodes[ 0 ].nodeValue = "Not authenticated.";
+        }
 			
 }			
       };
-	  request.onerror = function(aEvent)      //falilure
+	  request.onerror = function(aEvent)      //in case object creation faliled
 	  {
          window.alert("Error Status: " + aEvent.target.status);
       }; 
@@ -86,23 +70,20 @@ function initialize()
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");  
     request.send("accountType=HOSTED_OR_GOOGLE&Email=" + userName +  "@gmail.com&Passwd=" + password +  "&service=cl&source=Gulp-CalGulp-1.05");  
  
- 
-
-         
-      
-
-
- 
-
+   
 
 };
 
+
+//in case we press "cancel" in login screen
 function doCancel()
 {
+   
  self.close();
 };
 
 
+//checks if user input has proper length
 function validateInput(  name,  pass )
 {
    
@@ -118,4 +99,10 @@ function validateInput(  name,  pass )
 	     return false;
 
 };
+
+
+
+
+
+
 

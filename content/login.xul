@@ -10,45 +10,40 @@
   title="Login"
   orient="vertical"
   onload = "initialize();"
-  
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   
   
- <script src = "chrome://accessBar/content/funct.js" />
+<script src = "chrome://accessBar/content/funct.js" />                     <!--include functions from funct.js-->
 
-
+<!--create the login screen-->
 
 <hbox style="background-color:grey">
-<vbox>
-<description id = "msgDescription" >
-Waiting for login.
-</description>
-<label value=" "/>
-<label value=" "/>
+  <vbox>
+   <description id = "msgDescription" >
+     Waiting for login.
+    </description>
+    <label value=" "/>
+    <label value=" "/>
+    <label value="User Name:  "/>
+    <label value=" "/>
+    <label value="Passsword:  "/>
+  </vbox>
 
-<label value="User Name:  "/>
-<label value=" "/>
-<label value="Passsword:  "/>
-</vbox>
-<vbox>
-<label value=" "/>
-<label value=" "/>
-<label value=" "/>
-
-<textbox id="userNameTextbox"/>
-<textbox id="passwordTextbox" type="password"/>
-<label value=" "/>
-<label value=" "/>
-</vbox>
+  <vbox>
+    <label value=" "/>
+    <label value=" "/>
+    <label value=" "/>
+    <textbox id="userNameTextbox"/>
+    <textbox id="passwordTextbox" type="password"/>
+    <label value=" "/>
+    <label value=" "/>
+   </vbox>
 </hbox>
 
 <hbox>
-  <label value="                   "/>
-
+  <label value="                   "/> 
   <button id = "okButton" label = "Ok" />
   <button id = "cancelButton" label = "Cancel" />
 </hbox>
-
-
 
 </window>

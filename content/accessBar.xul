@@ -4,27 +4,49 @@
 <script src = "chrome://accessBar/content/funct.js" />
 
  <script>
-
- 
-
-
-
  <![CDATA[
 
+var theServerRequest;
+
+
+//this function request mail from gmail
+function doServerRequest()
+{
+  var command ="";  
+
+  theServerRequest = new XMLHttpRequest();
+  var messageToServer = "http://localhost/mail.php?" + "&command=" + command + "&" + "user=" + $userName + "&pass=" + $userPassword;
+  
+  theServerRequest.onreadystatechange = retrieveServerResponse;
+  theServerRequest.open( "GET", messageToServer, true);
+  theServerRequest.send( null );
+   
+}
+
+//this function proceses the response from gmail
+function retrieveServerResponse()
+{
+
+  
+   if ( theServerRequest.readyState == 4 )
+   {
+   if ( theServerRequest.status = 200 )
+   {
+      alert( "Response is:   " + theServerRequest.responseText );
+	}
+	
+	}
+	
+	}
 
 
  
+ //this function calls the login window
 function popup(url) 
 {
 
  var width  = 300;
  var height = 200;
- 
- 
-
- 
- if ( !isLogin )
-     {
  var left   = (screen.width  - width)/2;
  var top    = (screen.height - height)/2;
  var params = 'width='+width+', height='+height;
@@ -37,36 +59,20 @@ function popup(url)
  params += ', status=no';
  params += ', toolbar=no';
  window.open(url,"LOGON", params);
- }
- else
-   {
-   
-       document.getElementById("searchTextbox" ).disabled = true;
-	   document.getElementById("searchButton" ).disabled = true;
-	   
-	   //close connection
-	   
-	   
-	   isLogin = false;
-   
-   
-   }
-  
- 
- 
- 
+
 }
 
 ]]>
-
 </script>
+
+<!--create the mailControl toolbar-->
 
 <toolbox id="navigator-toolbox">
    <toolbar id="accessToolBar" toolbarname="Access Bar" >
       
        
        <textbox id="searchTextbox"  disabled = "true" />  
-       <button id="searchButton" image ="chrome://accessBar/content/images/readMail.JPG" disabled = "true" />      
+       <button id="searchButton" image ="chrome://accessBar/content/images/readMail.JPG" disabled = "true" oncommand="doServerRequest();" />      
       <button id="startButton" oncommand="popup('chrome://accessBar/content/login.xul');" image="chrome://accessBar/content/images/mc.jpg"/>
     
    </toolbar>
