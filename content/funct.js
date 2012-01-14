@@ -4,27 +4,27 @@
 //declare event handlers for login screen buttons
 function initialize()
 {
-   
-
    document.getElementById( "okButton" ).addEventListener( "command",doOk, true );
    document.getElementById( "cancelButton" ).addEventListener( "command",doCancel, true );
- 
 }
+
 
 //in case we press "ok" in  login screen, this function checks user
  function doOk()
 {
 
+ Components.utils.import("chrome://accessBar/content/commonVariables.jsm");
+ 
 
    var response;
 
        
-      var userName = document.getElementById( "userNameTextbox" ).value;
-       var userPassword = document.getElementById( "passwordTextbox" ).value;
+       user.userName = document.getElementById( "userNameTextbox" ).value;
+        user.userPassword = document.getElementById( "passwordTextbox" ).value;
 	   
 	   
 	   
-	 if ( !( validateInput( userName, password )  ) )
+	 if ( !( validateInput( user.userName, user.userPassword )  ) )
 		     alert( "!Invalid Input" );
 			  
      else
@@ -44,6 +44,7 @@ function initialize()
 		     
 			 self.opener.document.getElementById( "searchTextbox" ).disabled = false;
 			 self.opener.document.getElementById( "searchButton" ).disabled = false;
+			 user.isLogin = true;
 		     self.close();
          }			
     
@@ -53,10 +54,11 @@ function initialize()
     	 document.getElementById( "msgDescription" ).style.backgroundColor = "red";
          document.getElementById( "msgDescription" ).style.color = "white";
          document.getElementById( "msgDescription" ).childNodes[ 0 ].nodeValue = "Not authenticated.";
-        }
+         }
 			
-}			
-      };
+      }		
+	  
+   };
 	  request.onerror = function(aEvent)      //in case object creation faliled
 	  {
          window.alert("Error Status: " + aEvent.target.status);
@@ -65,10 +67,10 @@ function initialize()
 	  
 	  
 	 
-	 
+	 //send http request to gmail server in order to authenticate user
 	request.open("POST", url, true);  
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");  
-    request.send("accountType=HOSTED_OR_GOOGLE&Email=" + userName +  "@gmail.com&Passwd=" + password +  "&service=cl&source=Gulp-CalGulp-1.05");  
+    request.send("accountType=HOSTED_OR_GOOGLE&Email=" + user.userName +  "@gmail.com&Passwd=" + user.userPassword +  "&service=cl&source=Gulp-CalGulp-1.05");  
  
    
 

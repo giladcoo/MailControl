@@ -1,27 +1,33 @@
 <?xml version="1.0"?> 
 <overlay id="Scrapper-Overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script type="application/x-javascript" src="chrome://googbar/content/googbar.js" />
-<script src = "chrome://accessBar/content/funct.js" />
+ <script src = "chrome://accessBar/content/funct.js" />
 
  <script>
  <![CDATA[
-
-var theServerRequest;
+ 
+ 
+ Components.utils.import("chrome://accessBar/content/commonVariables.jsm");  //include common module
+ var theServerRequest;                                                       
 
 
 //this function request mail from gmail
 function doServerRequest()
 {
-  var command ="";  
+  var searchKey = document.getElementById( "searchTextbox" ).value;  
 
-  theServerRequest = new XMLHttpRequest();
-  var messageToServer = "http://localhost/mail.php?" + "&command=" + command + "&" + "user=" + $userName + "&pass=" + $userPassword;
-  
-  theServerRequest.onreadystatechange = retrieveServerResponse;
-  theServerRequest.open( "GET", messageToServer, true);
-  theServerRequest.send( null );
+  if ( searchKey == "" )
+      alert( "Invalid input" );
+ else
+	  {
+       theServerRequest = new XMLHttpRequest();
+       var messageToServer = "http://localhost/mail.php?" + "&searchKey=" + searchKey + "&" + "user=" + user.userName + "&pass=" + user.userPassword;
+       theServerRequest.onreadystatechange = retrieveServerResponse;
+       theServerRequest.open( "GET", messageToServer, true);
+       theServerRequest.send( null );  
+      }
    
-}
+ }
 
 //this function proceses the response from gmail
 function retrieveServerResponse()
@@ -30,14 +36,18 @@ function retrieveServerResponse()
   
    if ( theServerRequest.readyState == 4 )
    {
-   if ( theServerRequest.status = 200 )
-   {
-      alert( "Response is:   " + theServerRequest.responseText );
-	}
+  
+      if ( theServerRequest.status = 200 )
+      {
+   
+        var myWindow = window.open(null,null,"status=yes,toolbar=no,menubar=no,location=no");
+        myWindow.document.body.innerHTML = theServerRequest.responseText;;
+      
+	  }
 	
 	}
 	
-	}
+}
 
 
  
@@ -45,6 +55,8 @@ function retrieveServerResponse()
 function popup(url) 
 {
 
+ if ( !user.isLogin )
+ {
  var width  = 300;
  var height = 200;
  var left   = (screen.width  - width)/2;
@@ -59,6 +71,18 @@ function popup(url)
  params += ', status=no';
  params += ', toolbar=no';
  window.open(url,"LOGON", params);
+ }
+ else
+ {
+ 
+  document.getElementById( "searchTextbox" ).disabled = true;
+  document.getElementById( "searchTextbox" ).value = "";
+  document.getElementById( "searchButton" ).disabled = true;
+  user.isLogin = false;
+  user.userName = "n";
+  user.userPassword = "0";
+ 
+  }
 
 }
 
