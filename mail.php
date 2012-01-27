@@ -1,29 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
   <title>Email viewer</title>
-  <img align="right" src="http://localhost/mc.jpg"width="100" height="50"  />
-  <br>
-  <br>
-  <br>
-  <h1>Unread email from: 
-  <?php
-     echo $_GET[ 'searchKey' ];
-	 ?>
- </h1>
-    
+  <style>
+  body {background-image: url(http://localhost/background.jpg);
+        background-color: black;
+
+        }
+  .boxed {
+  border: 2px groove blue ;
+  background-color: white;
+  
+}
+  </style>
+
+ 
+  
   </head>
   
-  <body>
- 
- 
-<?php
+  <body> 
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <?php
 $hostname = '{imap.gmail.com:993/ssl}INBOX';
 $username = $_GET[ 'user' ];
 $password = $_GET[ 'pass' ];
 $key = $_GET[ 'searchKey' ];
 $message = "<div style=\"color:red\" align=\"right\"><br>NO MESSAGES</div>";
-
 
 
 //open stream to gmail server
@@ -59,13 +72,12 @@ if($emails) {
                                     	   
     
 	$date = $overview[0]->date;                                  //get date of current email
-	$message .= "<div align=\"right\">";
-    $message .= "<br><br>";
-	$message .= "<b>Date: </b>" . $date . "<br>" . "<b>Subject:   </b>" . $subject; 
-	$message .= "<br><br>";
+	$message .= "<div class=\"boxed\" align=\"right\">";
+	$message .= "<b>Date: </b>" . $date . "<br>" . "<b>Subject:  </b>" . $subject; 
+	$message .= "<hr /><br><br>";
 	$message .= imap_base64(imap_fetchbody($inbox,$email_number,2));          //get body of current email
 	$message .= "</div>";
-	$message .= "<hr />";
+	$message .= "<br>";
 	
  
   }

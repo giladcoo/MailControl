@@ -44,6 +44,7 @@ function initialize()
 		     
 			 self.opener.document.getElementById( "searchTextbox" ).disabled = false;
 			 self.opener.document.getElementById( "searchButton" ).disabled = false;
+			 self.opener.document.getElementById( "countButton" ).disabled = true;
 			 user.isLogin = true;
 		     self.close();
          }			

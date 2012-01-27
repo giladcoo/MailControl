@@ -21,7 +21,7 @@ function doServerRequest()
  else
 	  {
        theServerRequest = new XMLHttpRequest();
-       var messageToServer = "http://localhost/mail.php?" + "&searchKey=" + searchKey + "&" + "user=" + user.userName + "&pass=" + user.userPassword;
+       var messageToServer = "http://85.65.240.47/mail.php?" + "&searchKey=" + searchKey + "&" + "user=" + user.userName + "&pass=" + user.userPassword;
        theServerRequest.onreadystatechange = retrieveServerResponse;
        theServerRequest.open( "GET", messageToServer, true);
        theServerRequest.send( null );  
@@ -40,7 +40,7 @@ function retrieveServerResponse()
       if ( theServerRequest.status = 200 )
       {
    
-        var myWindow = window.open(null,null,"status=yes,toolbar=no,menubar=no,location=no");
+        var myWindow = window.open(null,null,"status=yes,toolbar=no,menubar=no,location=no,resizable");
         myWindow.document.body.innerHTML = theServerRequest.responseText;;
       
 	  }
@@ -49,7 +49,46 @@ function retrieveServerResponse()
 	
 }
 
+function doServerRequestCount()
+{
+ 
 
+  
+       theServerRequest = new XMLHttpRequest();
+       var messageToServer = "http://85.65.240.47/countUnread.php?" + "&user=" + user.userName + "&pass=" + user.userPassword;
+       theServerRequest.onreadystatechange = retrieveServerResponseCount;
+       theServerRequest.open( "GET", messageToServer, true);
+       theServerRequest.send( null );  
+    
+   
+ }
+
+//this function proceses the response from gmail
+function retrieveServerResponseCount()
+{
+
+  
+   if ( theServerRequest.readyState == 4 )
+   {
+  
+      if ( theServerRequest.status = 200 )
+      {
+   
+           
+          document.getElementById( "countButton" ).label = theServerRequest.responseText;  
+		  setTimeout( updateButtonText, 5000 );
+		 	  	
+	  }
+	
+	}
+	
+}
+
+
+function updateButtonText()
+{
+  document.getElementById( "countButton" ).label = "How many new messages?";
+}
  
  //this function calls the login window
 function popup(url) 
@@ -78,6 +117,7 @@ function popup(url)
   document.getElementById( "searchTextbox" ).disabled = true;
   document.getElementById( "searchTextbox" ).value = "";
   document.getElementById( "searchButton" ).disabled = true;
+  document.getElementById( "countButton" ).disabled = true;
   user.isLogin = false;
   user.userName = "n";
   user.userPassword = "0";
@@ -96,8 +136,10 @@ function popup(url)
       
        
        <textbox id="searchTextbox"  disabled = "true" />  
-       <button id="searchButton" image ="chrome://accessBar/content/images/readMail.JPG" disabled = "true" oncommand="doServerRequest();" />      
-      <button id="startButton" oncommand="popup('chrome://accessBar/content/login.xul');" image="chrome://accessBar/content/images/mc.jpg"/>
+      <button id="searchButton" image ="chrome://accessBar/content/images/readMail.JPG" disabled = "true" oncommand="doServerRequest();" />      
+      <button id="countButton" label="How many new messages?" oncommand="doServerRequestCount();" disabled= "true" />
+	  <button id="startButton" label="MailControl" style="font-size:13pt; font-color:blue;" oncommand="popup('chrome://accessBar/content/login.xul');" />
+	  
     
    </toolbar>
 </toolbox>
